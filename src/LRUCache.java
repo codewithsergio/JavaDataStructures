@@ -7,7 +7,7 @@ public class LRUCache {
     private Node head;
     private Node tail;
 
-    public static class Node {
+    private static class Node {
         int number;
         Node next;
         Node prev;
@@ -43,14 +43,12 @@ public class LRUCache {
         }
         if(map.size() > capacity){
             // remove least used node from DL list and map
-            System.out.println("Removing " + head.number);
             map.remove(head.number);
             remove(head);
         }
     }
 
     private void remove(Node nodeToRemove){ // Remove from DL list
-        System.out.println(head + " " + nodeToRemove + " " + nodeToRemove.number);
         if(nodeToRemove == head){ // Remove if head
             if(nodeToRemove.next == null){
                 nodeToRemove = null;

@@ -1,17 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        LRUCache cache = new LRUCache(5);
-        cache.add(1);
-        cache.add(2);
-        cache.add(3);
-        cache.add(4);
-        cache.add(5);
-        cache.add(6);
-        cache.add(7);
-        cache.get(4);
-        cache.add(6);
-        cache.add(2);
-        cache.get(1);
-        cache.add(2);
+        BinarySearchTree tree = new BinarySearchTree();
+        tree.addValue(10);
+        tree.addValue(5);
+        tree.addValue(7);
+        tree.addValue(17);
+        tree.addValue(1);
+        tree.addValue(13);
+        tree.traverseInOrder();
     }
 }
