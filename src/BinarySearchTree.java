@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BinarySearchTree {
     Node root;
     private class Node{
@@ -8,6 +11,14 @@ public class BinarySearchTree {
             this.number = number;
             this.leftChild = null;
             this.rightChild = null;
+        }
+
+        private boolean hasRightChild(){
+            return rightChild != null;
+        }
+
+        private boolean hasLeftChild(){
+            return leftChild != null;
         }
     }
     // Functions: addValue, hasValue, traverseInOrder, traverseLevelOrder
@@ -22,14 +33,14 @@ public class BinarySearchTree {
         Node nodeIterator = root;
         while(true){
             if(nodeIterator.number > valueToAdd){ // go left
-                if(nodeIterator.leftChild != null){
+                if(nodeIterator.hasLeftChild()){
                     nodeIterator = nodeIterator.leftChild;
                 } else {
                     nodeIterator.leftChild = newNode;
                     return;
                 }
             } else {
-                if(nodeIterator.rightChild != null){ // go right
+                if(nodeIterator.hasRightChild()){ // go right
                     nodeIterator = nodeIterator.rightChild;
                 } else {
                     nodeIterator.rightChild = newNode;
@@ -42,14 +53,14 @@ public class BinarySearchTree {
     public boolean hasValue(int valueToFind){
         Node nodeIterator = root;
         while(true){
-            if(nodeIterator.number > valueToFind){ // go left
-                if(nodeIterator.leftChild != null){
+            if(nodeIterator.number > valueToFind){ // search left
+                if(nodeIterator.hasLeftChild()){
                     nodeIterator = nodeIterator.leftChild;
                 } else {
                     return false;
                 }
-            } else if(nodeIterator.number < valueToFind) { // go right
-                if(nodeIterator.rightChild != null){
+            } else if(nodeIterator.number < valueToFind) { // search right
+                if(nodeIterator.hasRightChild()){
                     nodeIterator = nodeIterator.rightChild;
                 } else {
                     return false;
@@ -79,6 +90,22 @@ public class BinarySearchTree {
     }
 
     public void traverseLevelOrder(){
-
+        if(root == null) return;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            Node thisNode = queue.element();
+            // Print current node
+            System.out.println(thisNode.number);
+            // Add left if exists
+            if(thisNode.hasLeftChild()){
+                queue.add(thisNode.leftChild);
+            }
+            // Add right if exists
+            if(thisNode.hasRightChild()){
+                queue.add(thisNode.rightChild);
+            }
+            queue.remove();
+        }
     }
 }
