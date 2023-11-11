@@ -22,6 +22,7 @@ public class BinarySearchTree {
         }
     }
     // Functions: addValue, hasValue, traverseInOrder, traverseLevelOrder
+    // think about adding: delete node
 
     public void addValue(int valueToAdd){
         Node newNode = new Node(valueToAdd);
