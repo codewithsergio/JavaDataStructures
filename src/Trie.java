@@ -75,9 +75,17 @@ public class Trie {
         return wordCount;
     }
 
-    public void printWords(){
-        for(Node child: root.getChildren()){
+    public void printWords() {
+        printWords(root, "");
+    }
 
+    private void printWords(Node node, String currentWord) {
+        if (node.isEndOfWord) {
+            System.out.println(currentWord);
+        }
+
+        for (Node child : node.getChildren()) {
+            printWords(child, currentWord + child.value);
         }
     }
 }

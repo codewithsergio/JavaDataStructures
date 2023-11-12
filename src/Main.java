@@ -13,6 +13,6 @@ public class Main {
         int a = trie.getWordCount();
         System.out.println(a);
 
-        trie.traverse();
+        trie.printWords();
     }
 }
