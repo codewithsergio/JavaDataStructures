@@ -57,18 +57,15 @@ public class BinarySearchTree {
             if(nodeIterator.number > valueToFind){ // search left
                 if(nodeIterator.hasLeftChild()){
                     nodeIterator = nodeIterator.leftChild;
-                } else {
+                } else
                     return false;
-                }
             } else if(nodeIterator.number < valueToFind) { // search right
                 if(nodeIterator.hasRightChild()){
                     nodeIterator = nodeIterator.rightChild;
-                } else {
+                } else
                     return false;
-                }
-            } else { // found value
+            } else
                 return true;
-            }
         }
     }
 
