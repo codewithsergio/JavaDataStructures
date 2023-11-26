@@ -21,10 +21,8 @@ public class BinarySearchTree {
             return leftChild != null;
         }
     }
-    // Functions: addValue, hasValue, traverseInOrder, traverseLevelOrder
-    // think about adding: delete node
 
-    public void addValue(int valueToAdd){
+    public void insert(int valueToAdd){
         Node newNode = new Node(valueToAdd);
         if(root == null){
             // Initialize root
@@ -105,5 +103,31 @@ public class BinarySearchTree {
             }
             queue.remove();
         }
+    }
+
+    public int kthSmallest(int k){
+        return kthSmallest(root, k);
+    }
+
+    private int kthSmallest(Node root, int k) {
+        if (root == null) {
+            return -1; // or any value that represents not found
+        }
+
+        int leftCount = countNodes(root.leftChild);
+        if (k <= leftCount) {
+            return kthSmallest(root.leftChild, k);
+        } else if (k == leftCount + 1) {
+            return root.number;
+        } else {
+            return kthSmallest(root.rightChild, k - leftCount - 1);
+        }
+    }
+
+    private int countNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + countNodes(root.leftChild) + countNodes(root.rightChild);
     }
 }
