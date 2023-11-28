@@ -13,3 +13,5 @@ public class Main {
         System.out.println(r);
     }
 }
+// functions to add
+// isComplete() BST
