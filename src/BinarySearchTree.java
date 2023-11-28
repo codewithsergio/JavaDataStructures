@@ -130,4 +130,37 @@ public class BinarySearchTree {
         }
         return 1 + countNodes(root.leftChild) + countNodes(root.rightChild);
     }
+
+    public boolean isComplete(){
+        if(root == null) return false;
+        // Level Order Traversal
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        boolean hasHole = false;
+        while(!queue.isEmpty()){
+            Node node = queue.remove();
+            while(node != null){
+                if((node.hasLeftChild() || node.hasRightChild()) && hasHole) return false;
+                if(!node.hasLeftChild() && node.hasRightChild()) return false;
+                if(node.hasLeftChild() && node.hasRightChild()){
+                    queue.add(node.leftChild);
+                    queue.add(node.rightChild);
+                } else {
+                    if(node.hasLeftChild())
+                        queue.add(node.leftChild);
+                    hasHole = true;
+                }
+                try{
+                    node = queue.remove();
+                }catch(Exception e){
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void terminalPrint(){
+
+    }
 }
