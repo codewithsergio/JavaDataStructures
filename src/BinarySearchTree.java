@@ -1,16 +1,19 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinarySearchTree {
-    Node root;
+    public Node root;
+    public int height;
     private class Node{
         int number;
         Node leftChild;
         Node rightChild;
         Node(int number){
             this.number = number;
-            this.leftChild = null;
-            this.rightChild = null;
+            leftChild = null;
+            rightChild = null;
+            height = 0;
         }
 
         private boolean hasRightChild(){
@@ -24,29 +27,33 @@ public class BinarySearchTree {
 
     public void insert(int valueToAdd){
         Node newNode = new Node(valueToAdd);
+        int currentHeight = 0;
         if(root == null){
             // Initialize root
             root = newNode;
+            height = 1;
             return;
         }
         Node nodeIterator = root;
         while(true){
+            currentHeight++;
             if(nodeIterator.number > valueToAdd){ // go left
                 if(nodeIterator.hasLeftChild()){
                     nodeIterator = nodeIterator.leftChild;
                 } else {
                     nodeIterator.leftChild = newNode;
-                    return;
+                    break;
                 }
             } else {
                 if(nodeIterator.hasRightChild()){ // go right
                     nodeIterator = nodeIterator.rightChild;
                 } else {
                     nodeIterator.rightChild = newNode;
-                    return;
+                    break;
                 }
             }
         }
+        if(currentHeight > height) height = currentHeight;
     }
 
     public boolean hasValue(int valueToFind){
@@ -105,6 +112,34 @@ public class BinarySearchTree {
         }
     }
 
+    public void levelOrderTraversal(){
+        if(root == null) return;
+        // Level Order Traversal
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int queueLength = queue.size(); // current level length
+            while(queueLength > 0){
+                Node node = queue.remove();
+                queueLength--;
+                if(node == null) {
+                    continue;
+                }
+                System.out.println(node.number);
+                if(node.hasLeftChild()){
+                    queue.add(node.leftChild);
+                } else {
+                    queue.add(null);
+                }
+                if(node.hasRightChild()) {
+                    queue.add(node.rightChild);
+                } else{
+                    queue.add(null);
+                }
+            }
+        }
+    }
+
     public int kthSmallest(int k){
         return kthSmallest(root, k);
     }
@@ -129,5 +164,67 @@ public class BinarySearchTree {
             return 0;
         }
         return 1 + countNodes(root.leftChild) + countNodes(root.rightChild);
+    }
+
+
+// left/right spaces variable: (2 ^ (height - 1) - 1) / (2 * [currentLevel [0 index based]])
+// *height: how many levels are there
+
+// each level after will just divide that value by 2
+// middle spaces == previous level's left/right spaces
+//
+
+
+    public void displayTree(){
+        if(root == null) return;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        int nodesInCurrentLevel = 1;
+        int spaces = (int)Math.pow(2, (height)) - 1;
+        int middleSpaces = 0;
+
+        while(!queue.isEmpty()){
+            printNSpaces(spaces); // left spaces
+            int queueLength = queue.size(); // current level length
+            int currentLevel = log2(nodesInCurrentLevel) + 1;
+
+            while(queueLength > 0){
+                Node node = queue.remove();
+                queueLength--;
+
+                if(node == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.printf("%03d", node.number);
+                }
+                if(middleSpaces < 0) return;
+                printNSpaces(middleSpaces); // middle space for each value
+
+                if(node != null) {
+                    queue.add(node.leftChild);
+                    queue.add(node.rightChild);
+                } else {
+                    queue.add(null);
+                    queue.add(null);
+                }
+            }
+
+            nodesInCurrentLevel *= 2;
+            middleSpaces = spaces;
+            spaces = (int)Math.pow(2, (height - currentLevel)) - 1;
+
+            System.out.println();
+        }
+    }
+
+
+
+    public void printNSpaces(int n){
+        if(n < 0) return;
+        System.out.print("   ".repeat(n));
+    }
+
+    public int log2(int N){
+        return (int)(Math.log(N) / Math.log(2));
     }
 }
