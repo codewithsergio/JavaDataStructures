@@ -192,9 +192,9 @@ public class BinarySearchTree {
                 queueLength--;
 
                 if(node == null) {
-                    System.out.print("   ");
+                    System.out.print("     ");
                 } else {
-                    System.out.printf("%03d", node.number);
+                    System.out.printf("(%3d)", node.number);
                 }
                 if(middleSpaces < 0) return;
                 printNSpaces(middleSpaces); // middle space for each value
@@ -220,7 +220,7 @@ public class BinarySearchTree {
 
     public void printNSpaces(int n){
         if(n < 0) return;
-        System.out.print("   ".repeat(n));
+        System.out.print("     ".repeat(n));
     }
 
     public int log2(int N) {
