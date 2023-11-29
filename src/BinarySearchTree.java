@@ -166,7 +166,6 @@ public class BinarySearchTree {
         return 1 + countNodes(root.leftChild) + countNodes(root.rightChild);
     }
 
-
 // left/right spaces variable: (2 ^ (height - 1) - 1) / (2 * [currentLevel [0 index based]])
 // *height: how many levels are there
 
@@ -224,7 +223,36 @@ public class BinarySearchTree {
         System.out.print("   ".repeat(n));
     }
 
-    public int log2(int N){
-        return (int)(Math.log(N) / Math.log(2));
+    public int log2(int N) {
+        return (int) (Math.log(N) / Math.log(2));
+    }
+
+    public boolean isComplete(){
+        if(root == null) return false;
+        // Level Order Traversal
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        boolean hasHole = false;
+        while(!queue.isEmpty()){
+            Node node = queue.remove();
+            while(node != null){
+                if((node.hasLeftChild() || node.hasRightChild()) && hasHole) return false;
+                if(!node.hasLeftChild() && node.hasRightChild()) return false;
+                if(node.hasLeftChild() && node.hasRightChild()){
+                    queue.add(node.leftChild);
+                    queue.add(node.rightChild);
+                } else {
+                    if(node.hasLeftChild())
+                        queue.add(node.leftChild);
+                    hasHole = true;
+                }
+                try{
+                    node = queue.remove();
+                }catch(Exception e){
+                    break;
+                }
+            }
+        }
+        return true;
     }
 }
