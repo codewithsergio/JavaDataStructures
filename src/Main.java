@@ -8,7 +8,7 @@ public class Main {
         for(int number: array){
             tree.insert(number);
         }
-        tree.displayTree();
+        //tree.displayTree();
         System.out.println();
         System.out.println("--------------");
 
@@ -17,7 +17,14 @@ public class Main {
         for(int number: array2){
             tree2.insert(number);
         }
-        tree2.displayTree();
+        //tree2.displayTree();
+
+        BinarySearchTree tree3 = new BinarySearchTree();
+        int[] array3 = {100, 130, 150};
+        for(int number: array3){
+            tree3.insert(number);
+        }
+        tree3.displayTree();
     }
 }
 // functions to add

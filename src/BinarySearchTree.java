@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -186,13 +187,12 @@ public class BinarySearchTree {
             printNSpaces(spaces); // left spaces
             int queueLength = queue.size(); // current level length
             int currentLevel = log2(nodesInCurrentLevel) + 1;
-
             while(queueLength > 0){
                 Node node = queue.remove();
                 queueLength--;
 
                 if(node == null) {
-                    System.out.print("     ");
+                    System.out.print("(---)");
                 } else {
                     System.out.printf("(%3d)", node.number);
                 }
@@ -210,13 +210,12 @@ public class BinarySearchTree {
 
             nodesInCurrentLevel *= 2;
             middleSpaces = spaces;
+            if(middleSpaces == 0) return;
             spaces = (int)Math.pow(2, (height - currentLevel)) - 1;
 
             System.out.println();
         }
     }
-
-
 
     public void printNSpaces(int n){
         if(n < 0) return;
